@@ -42,6 +42,15 @@ dependencies:
   shared_preferences:
   flutter_screenutil: ^5.0.0+2
   cloud_firestore:
+  flutter_svg: ^0.22.0
+  image_picker:
+  firebase_storage:
+  bloc_pattern:
+  rxdart:
+  equatable:
+  flutter_bloc:
+
+
 
 dev_dependencies:
   flutter_test:

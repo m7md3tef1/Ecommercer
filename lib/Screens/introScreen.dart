@@ -12,7 +12,7 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
  forFirstTime()async{
    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-   sharedPreferences.setString('firstTime', 'yes');
+   sharedPreferences.setString('firstTime','yes');
  }
 
   @override
@@ -32,21 +32,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         },
         pages: [
           PageViewModel(
-              image: Image.asset('image/1.jpg'
+              image: Image.asset('image/download.jpg'
               ),
               title: 'Welcome to Our App',
               body:
                   'Healthy foods are those that provide you with the nutrients you need to sustain your body’s well-being and retain energy. Water, carbohydrates, fat, protein, vitamins, and minerals are the key nutrients that make up a healthy, balanced die'),
           PageViewModel(
-              image: Image.asset('image/2.png'),
+              image: Image.asset('image/21.png'),
               title: 'We Cook Healthy Food',
               body: ' Healthy foods are those that provide you with the nutrients you need to sustain your body’s well-being and retain energy. Water, carbohydrates, fat, protein, vitamins, and minerals are the key nutrients that make up a healthy, balanced die'),
           PageViewModel(
-              image: Image.asset('image/3.png'),
+              image: Image.asset('image/52.png'),
               title: 'We Cook Healthy Food ',
               body: ' Healthy foods are those that provide you with the nutrients you need to sustain your body’s well-being and retain energy. Water, carbohydrates, fat, protein, vitamins, and minerals are the key nutrients that make up a healthy, balanced die'),
           PageViewModel(
-              image: Image.asset('image/4.png'),
+              image: Image.asset('image/20.png'),
               title: 'We Cook Healthy Food',
               body: 'Healthy foods are those that provide you with the nutrients you need to sustain your body’s well-being and retain energy. Water, carbohydrates, fat, protein, vitamins, and minerals are the key nutrients that make up a healthy, balanced die'),
         ],

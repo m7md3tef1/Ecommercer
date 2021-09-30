@@ -36,7 +36,7 @@ class _SignupScreenState extends State<SignoutScreen> {
           ),
           child: ListView(children: [
       Image(
-          image: AssetImage('image/logo.webp'),
+          image: AssetImage('image/150.jpg'),
           width: .5.sw,
           height: .3.sh,
       ),
@@ -137,7 +137,7 @@ class _SignupScreenState extends State<SignoutScreen> {
                   Provider.of<ModalHud>(context, listen: false)
                       .changeIsLoading(false);
                   Navigator.pushNamedAndRemoveUntil(
-                      context, 'SigninScreen', (route) => false);
+                      context, 'HomeScreen', (route) => false);
                 } else {
                   Provider.of<ModalHud>(context, listen: false)
                       .changeIsLoading(false);
@@ -153,7 +153,7 @@ class _SignupScreenState extends State<SignoutScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.green, borderRadius: BorderRadius.circular(15)),
+                  color: Colors.green[400], borderRadius: BorderRadius.circular(15)),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),

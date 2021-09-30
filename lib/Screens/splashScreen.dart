@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,26 +15,28 @@ class _SplashScreenState extends State<SplashScreen> {
 String isFirst;
 checkIsScreenState()async{
   SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-  isFirst=sharedPreferences.getString('firstTime');
+  setState(() {
+    isFirst=sharedPreferences.getString('firstTime');
+  });
 }
 
   @override
   initState() {
     // TODO: implement
-    checkIsScreenState();
     super.initState();
+    checkIsScreenState();
     Timer(Duration(seconds: 3),
             (){
-Navigator.popAndPushNamed(context, isFirst==null?'IntroScreen':'SigninScreen');
+Navigator.popAndPushNamed(context,isFirst==null?'IntroScreen':'SigninScreen');
             } );
     print('hello');
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.green[200],
       body: Center(
-        child:Image(image: AssetImage('image/logo.webp'),width: .4.sw,height: .9.sh,)
+        child:Image(image: AssetImage('image/150.jpg'),width: .4.sw,height: .9.sh,)
 
 
       ),

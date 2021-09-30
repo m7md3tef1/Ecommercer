@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:second_project/providers/favProvid.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FavScreen extends StatefulWidget {
   const FavScreen({Key key}) : super(key: key);
@@ -20,16 +21,16 @@ class _FavScreenState extends State<FavScreen> {
           itemBuilder: (context,index)
       {
         return Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding:  EdgeInsets.all(8.0.h),
           child: Container(
-            color: Colors.grey[300],
+            color: Colors.grey[100],
             child: Column(
               children: [
-               Image.asset(favList[index].imgurl,width: 400,height: 300,),
+               Image.asset(favList[index].imgurl,width: double.infinity,height: 250.h,),
                 Text(favList[index].name,style: TextStyle(color: Colors.black,
-                    fontSize: 20, fontWeight: FontWeight.bold)),
-                Text(favList[index].type,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold, fontSize: 15)),
-                Text(favList[index].price ,style: TextStyle(color: Colors.deepPurple, fontSize: 20),),
+                    fontSize: 20.sp, fontWeight: FontWeight.bold)),
+                Text(favList[index].type,style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold, fontSize: 15.sp)),
+                Text(favList[index].price ,style: TextStyle(color: Colors.deepPurple, fontSize: 20.sp),),
               ],
             ),
 

@@ -14,12 +14,12 @@ class _ForgetPassState extends State<ForgetPass> {
     return Scaffold(
       body: ListView(
         children: [
-          SizedBox(height: 10,),
-          Image(image: AssetImage('image/logo.webp'),width:.2.sw,height: .5.sh,),
-          SizedBox(height: 70,),
+
+          Image(image: AssetImage('image/150.jpg'),width:.2.sw,height: .5.sh,),
+
           CustomTextFormField(name:'Email' ,hint: 'Enter your mail',icondata: Icons.email,secure: false,),
           Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.fromLTRB(8.0,20,8,8),
             child: Column(
 
               mainAxisAlignment: MainAxisAlignment.end,
@@ -27,19 +27,21 @@ class _ForgetPassState extends State<ForgetPass> {
               children: [
 
                 Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.green),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.green[400]),
 
-                  height: .1.sh,
-                  width: .85.sw,
+                  width: 310.w,
 
                     child: InkWell(
                       onTap: () {
                         print('sign in');
                       },
                       child: Center(
-                        child: Text(
-                          'Sign in',
-                          style: TextStyle(color: Colors.white, fontSize: 21,fontWeight: FontWeight.bold),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            'Sign in',
+                            style: TextStyle(color: Colors.white, fontSize: 21,fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
 

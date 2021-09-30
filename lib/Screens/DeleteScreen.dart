@@ -1,17 +1,17 @@
-import 'dart:ui';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:second_project/models/product.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DeleteScreen extends StatefulWidget {
-  const DeleteScreen({Key key}) : super(key: key);
-
+class DeleteProduct extends StatefulWidget {
+  static String id ='DeleteScreen';
   @override
-  _DeleteScreenState createState() => _DeleteScreenState();
+  _DeleteProductState createState() => _DeleteProductState();
 }
 
-class _DeleteScreenState extends State<DeleteScreen> {
+class _DeleteProductState extends State<DeleteProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,49 +19,93 @@ class _DeleteScreenState extends State<DeleteScreen> {
         title: Text('Delete Product'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: getProducts(),
-        builder: (context, snapshots) {
-          List<Product>products = [];
-          if (snapshots.hasData) {
-            for (var doc in snapshots.data.docs) {
-              products.add(Product(
-                id: doc.id,
-                Description: doc.get('Description'),
-                name: doc.get('name'),
-                price: doc.get('price'),
-                Size: doc.get('size'),
-              ));
+          stream: getProducts(),
+          builder: (context,snapShots)
+          {
+            List<Product>products=[];
+            if(snapShots.hasData)
+            {
+              for(var doc in snapShots.data.docs)
+              {
+                products.add(Product(
+                  id: doc.id,
+                  name: doc.get('name'),
+                Description: doc['Description'],
+                  price: doc.get('prise'),
+                  Size: doc.get('size'),
+                  imgurl: doc.get('link'),
+                ));
+              }
             }
-          }
-          return GridView.builder(
-            itemCount: products.length,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (context, index) {
+
+
+            return GridView.builder(
+                itemCount: products.length,
+                gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemBuilder: (context,index)
+            {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: (){
-                    FirebaseFirestore.instance.collection('product').doc(products[index].id).delete();
+                    FirebaseFirestore.instance.collection('Product').doc(products[index].id).delete();
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        image: DecorationImage(
-                          image: AssetImage('image/5.jpg'),
-                        )),
-                    child: Text(products[index].name),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: SizedBox(
+                          height: 120.h,
+                          width: 1500.w,
+                          child: Container(
+                            decoration: BoxDecoration(
+
+                                color: Colors.grey[200],
+                                image:DecorationImage(
+
+                                  image: NetworkImage(products[index].imgurl),
+                                )),
+
+
+                          ),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text('Name: ',style: TextStyle(color: Colors.green,fontSize: 15.sp,fontWeight: FontWeight.bold),),
+                              ),
+                              Text(products[index].name,style: TextStyle(color: Colors.black87,fontSize: 12.sp,fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text('Price:  ',style: TextStyle(color: Colors.green,fontSize: 15.sp,fontWeight: FontWeight.bold),),
+                              ),
+                              Text(products[index].price,style: TextStyle(color: Colors.black87,fontSize: 12.sp,fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+
+                        ],
+                      ),
+
+
+                    ],
                   ),
+
                 ),
               );
-            },
-          );
-        },
-      ),
+            });
+          }),
     );
   }
-
-  getProducts() {
+  getProducts()
+  {
     return FirebaseFirestore.instance.collection('Product').snapshots();
   }
 }

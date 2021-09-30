@@ -36,7 +36,7 @@ class _SigninScreenState extends State<SigninScreen> {
         ),
         child: ListView(children: [
           Image(
-            image: AssetImage('image/logo.webp'),
+            image: AssetImage('image/150.jpg'),
             width: .50.sh,
             height: .30.sw,
           ),
@@ -135,7 +135,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         await auth.signin(email, password);
                         Provider.of<ModalHud>(context, listen: false)
                             .changeIsLoading(false);
-                        Navigator.pushNamed(context, 'useroradmin');
+                        Navigator.popAndPushNamed(context, 'useroradmin');
                       } else {
                         Provider.of<ModalHud>(context, listen: false)
                             .changeIsLoading(false);
@@ -154,7 +154,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.green[400],
                         borderRadius: BorderRadius.circular(14)),
                     child: Center(
                       child: Padding(
@@ -189,7 +189,7 @@ class _SigninScreenState extends State<SigninScreen> {
             child: Row(
               children: [
                 SizedBox(
-                    width: 150,
+                    width: .35.sw,
                     child: Divider(
                       color: Colors.black26,
                       thickness: 3,
@@ -210,14 +210,14 @@ class _SigninScreenState extends State<SigninScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 5.0, 30.0, 5.0),
+            padding:  EdgeInsets.fromLTRB(22.h, 5.0.h, 22.0.h, 5.0.h),
             child: InkWell(
               onTap: () async {
                 Provider.of<ModalHud>(context, listen: false)
                     .changeIsLoading(true);
                 try {
                   await auth.signInWithGoogle();
-                  Navigator.pushNamed(context, 'useroradmin');
+                  Navigator.popAndPushNamed(context, 'useroradmin');
                 } catch (e) {
                   Provider.of<ModalHud>(context, listen: false)
                       .changeIsLoading(false);
@@ -253,7 +253,7 @@ class _SigninScreenState extends State<SigninScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(30, 5.0, 30.0, 5.0),
+            padding:  EdgeInsets.fromLTRB(22.h, 5.0.h, 22.0.h, 5.0.h),
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.blueAccent,
@@ -261,7 +261,7 @@ class _SigninScreenState extends State<SigninScreen> {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding:  EdgeInsets.all(12.h),
                     child: Icon(
                       FontAwesomeIcons.facebook,
                       color: Colors.white,

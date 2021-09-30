@@ -29,7 +29,7 @@ class _useroradminScreenState extends State<useroradminScreen> {
                         CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 80,
-                          backgroundImage: AssetImage('image/download.jpg'),
+                          backgroundImage: AssetImage('image/100.jpg'),
                         ),
                         Text(
                           'Admin',
