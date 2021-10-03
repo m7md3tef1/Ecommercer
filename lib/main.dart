@@ -1,4 +1,3 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,6 @@ import 'package:second_project/Screens/signinScreen.dart';
 import 'package:second_project/Screens/signoutScreen.dart';
 import 'package:second_project/Screens/splashScreen.dart';
 import 'package:second_project/Screens/user%20or%20admin.dart';
-import 'package:second_project/bloc/cartListBloc.dart';
 import 'package:second_project/providers/cartprovid.dart';
 import 'package:second_project/providers/favProvid.dart';
 import 'package:second_project/providers/themeproviders.dart';
@@ -50,33 +48,28 @@ class _commecerState extends State<commecer> {
   Widget build(BuildContext context) {
     return 
       ScreenUtilInit(
-        builder:()=> BlocProvider(
-          blocs: [
-            Bloc ((i)=>CartListBloc())
-          ],
-          child: MaterialApp(
-          theme: Provider.of<Themeprovider>(context).islight ==true?lightMode:darkMode,
+        builder:()=> MaterialApp(
+        theme: Provider.of<Themeprovider>(context).islight ==true?lightMode:darkMode,
 
-          debugShowCheckedModeBanner: false,
-           initialRoute: 'SplashScreen',
-           routes: {
-            'SplashScreen':(context)=>SplashScreen(),
-             'HomeScreen':(context)=>HomeScreen(),
-             'SigninScreen':(context)=>SigninScreen(),
-             'SignoutScreen':(context)=>SignoutScreen(),
-             CategoryScreen.id:(context)=>CategoryScreen(),
-             'ForgetPass':(context)=>ForgetPass(),
-             'IntroScreen':(context)=>OnboardingScreen(),
-             'CartScreen':(context)=>cartScreen(),
-             productDetails.id:(context)=>productDetails(),
-             'favScreen':(context)=>FavScreen(),
-             'useroradmin':(context)=>useroradminScreen(),
-             'AdminScreen':(context)=>AdminScreen(),
-             'AddProductScreen':(context)=>AddProductScreen(),
-             'DeleteScreen':(context)=>DeleteProduct()
-           },
+        debugShowCheckedModeBanner: false,
+         initialRoute: 'SplashScreen',
+         routes: {
+          'SplashScreen':(context)=>SplashScreen(),
+           'HomeScreen':(context)=>HomeScreen(),
+           'SigninScreen':(context)=>SigninScreen(),
+           'SignoutScreen':(context)=>SignoutScreen(),
+           CategoryScreen.id:(context)=>CategoryScreen(),
+           'ForgetPass':(context)=>ForgetPass(),
+           'IntroScreen':(context)=>OnboardingScreen(),
+           'CartScreen':(context)=>cartScreen(),
+           productDetails.id:(context)=>productDetails(),
+           'favScreen':(context)=>FavScreen(),
+           'useroradmin':(context)=>useroradminScreen(),
+           'AdminScreen':(context)=>AdminScreen(),
+           'AddProductScreen':(context)=>AddProductScreen(),
+           'DeleteScreen':(context)=>DeleteProduct()
+         },
     ),
-        ),
       );
   }
 }

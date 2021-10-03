@@ -1,16 +1,13 @@
 import 'package:badges/badges.dart';
-import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import 'package:second_project/Screens/CategoryScreen.dart';
 import 'package:second_project/Screens/productDetails.dart';
-import 'package:second_project/bloc/cartListBloc.dart';
 import 'package:second_project/models/product.dart';
 import 'package:second_project/providers/favProvid.dart';
 import 'package:second_project/providers/themeproviders.dart';
-import 'package:flutter_bloc/flutter_bloc.dart' as route;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -67,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: '7.49 L.E',
     ),
   ];
-  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,14 +135,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       scaffoldkey.currentState.openDrawer();
                     },
                     child: Icon(Icons.list)),
-                StreamBuilder(
-                  stream: bloc.ListStream,
-                  builder: (context, snapshot) {
-                    List<Product> products = snapshot.data;
-                    int length = products != null ? products.length : 0;
-                    return buildGestureDetector(length, context, products);
-                  },
-                )
+                Badge(
+                    badgeContent: CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 6,
+                      child: Text(
+                        '0',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13),
+                      ),
+                    ),
+                    position: BadgePosition(top: -8, end: -5),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, 'CartScreen');
+                      },
+                      child: Icon(
+                        Icons.shopping_cart,
+                        size: 40,
+                      ),
+                    )),
               ],
             ),
           ),
@@ -222,95 +232,152 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * .40,
-            child: ListView.builder(
-                itemCount: name.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return productDetails(
-                          product: products[index],
-                        );
-                      }));
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child:route.BlocConsumer(
-                          bloc: route.BlocProvider.of(context),
-                            listener: (context, favList) {},
-                            builder: (context, favList) {
-                              for (var procuct in favList.favList) {
-                                if (procuct == products[index]) {
-                                  return InkWell(
-                                    onTap: () {
-                                      favList.removeProduct(products[index]);
-                                    },
-                                    child: Badge(
-                                      badgeContent: Icon(Icons.favorite),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            color: Colors.white,
-                                            child: Hero(
-                                              tag: "image-${picture[index]}",
-                                              child: Image(
-                                                image:
-                                                    AssetImage(picture[index]),
-                                                width: 180,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    .50,
-                                              ),
-                                            ),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                .4,
-                                            width: 270,
-                                          ),
-                                          Hero(
-                                            tag: "name-${name[index]}",
-                                            child: Text(
-                                              name[index],
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height * .50,
+              child: ListView.builder(
+                  itemCount: name.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return productDetails(
+                            product: products[index],
+                          );
+                        }));
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Consumer<FavouriteList>(
+                              builder: (context, favList, child) {
+                            for (var procuct in favList.favList) {
+                              if (procuct == products[index]) {
+                                return InkWell(
+                                  onTap: () {
+                                    favList.removeProduct(products[index]);
+                                  },
+                                  child: Badge(
+                                    badgeContent: Icon(Icons.favorite),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          color: Colors.white,
+                                          child: Hero(
+                                            tag: "image-${picture[index]}",
+                                            child: Image(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(picture[index]),
+                                              width: 180,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  .50,
                                             ),
                                           ),
-                                          Hero(
-                                            tag: "type-${type[index]}",
-                                            child: Text(
-                                              type[index],
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 15),
-                                            ),
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  .3,
+                                          width: 270,
+                                        ),
+                                        Hero(
+                                          tag: "name-${name[index]}",
+                                          child: Text(
+                                            name[index],
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                          Hero(
-                                            tag: "price-${price[index]}",
-                                            child: Text(
-                                              price[index],
-                                              style: TextStyle(
-                                                  color: Colors.deepPurple,
-                                                  fontSize: 20),
-                                            ),
+                                        ),
+                                        Hero(
+                                          tag: "type-${type[index]}",
+                                          child: Text(
+                                            type[index],
+                                            style: TextStyle(
+                                                color: Colors.grey, fontSize: 15),
                                           ),
-                                        ],
+                                        ),
+                                        Hero(
+                                          tag: "price-${price[index]}",
+                                          child: Text(
+                                            price[index],
+                                            style: TextStyle(
+                                                color: Colors.deepPurple,
+                                                fontSize: 20),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                            return InkWell(
+                              onTap: () {
+                                favList.addProduct(products[index]);
+                              },
+                              child: Badge(
+                                badgeContent:
+                                Icon(Icons.favorite_border_outlined),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      color: Colors.white,
+                                      child: Hero(
+                                        tag: "image-${picture[index]}",
+                                        child: Image(
+                                          image: AssetImage(picture[index]),
+                                          width: 180,
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              .50,
+                                        ),
+                                      ),
+                                      height:
+                                      MediaQuery.of(context).size.height *
+                                          .3,
+                                      width: 270,
+                                    ),
+                                    Hero(
+                                      tag: "name-${name[index]}",
+                                      child: Text(
+                                        name[index],
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                  );
-                                }
-                                ;
-                              }
-                            })),
-                  );
-                }),
+                                    Hero(
+                                      tag: "type-${type[index]}",
+                                      child: Text(
+                                        type[index],
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 15),
+                                      ),
+                                    ),
+                                    Hero(
+                                      tag: "price-${price[index]}",
+                                      child: Text(
+                                        price[index],
+                                        style: TextStyle(
+                                            color: Colors.deepPurple,
+                                            fontSize: 20),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                          )
+                      ),
+                    );
+                  }),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -336,31 +403,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-GestureDetector buildGestureDetector(
-    int length, BuildContext context, List<Product> products) {
-  return GestureDetector(
-    onTap: () {},
-    child: Badge(
-        badgeContent: CircleAvatar(
-          backgroundColor: Colors.red,
-          radius: 6,
-          child: Text(
-            length.toString(),
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 13),
-          ),
-        ),
-        position: BadgePosition(top: -8, end: -5),
-        child: InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, 'CartScreen');
-          },
-          child: Icon(
-            Icons.shopping_cart,
-            size: 40,
-          ),
-        )),
-  );
 }

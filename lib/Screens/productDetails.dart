@@ -1,11 +1,9 @@
 import 'dart:ui';
-import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'as route;
-import 'package:flutter_bloc/flutter_bloc.dart'as route;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:second_project/bloc/cartListBloc.dart';
+import 'package:provider/provider.dart';
 import 'package:second_project/models/product.dart';
+import 'package:second_project/providers/cartprovid.dart';
 
 class productDetails extends StatefulWidget {
   static String id = 'ProductDetails';
@@ -17,10 +15,7 @@ class productDetails extends StatefulWidget {
 }
 
 class _productDetailsState extends State<productDetails> {
-  final CartListBloc bloc = BlocProvider.getBloc<CartListBloc>();
-  addToCart(Product product) {
-    bloc.addToList(product);
-  }
+
 
   int i = 0;
   List<Product> products = [
@@ -168,15 +163,13 @@ class _productDetailsState extends State<productDetails> {
                           decoration: BoxDecoration(
                               color: Colors.black87,
                               borderRadius: BorderRadius.circular(15.h)),
-                          child: route.BlocConsumer(
-                            bloc: route.BlocProvider.of(context),
-                              listener: (context, cartlist) {},
-                              builder: (context, cartlist) {
+                          child: Consumer<CartList>(
+                              builder: (context, cartlist,child) {
                                 for (var product in cartlist.cartList) {
                                   if (product == widget.product) {
                                     return InkWell(
                                       onTap: () {
-                                        addToCart(widget.product);
+                                        cartlist.addProduct(widget.product);
                                         final snackBar = SnackBar(
                                           content: Text(
                                               "${widget.product.name} added to the cart"),
@@ -184,8 +177,6 @@ class _productDetailsState extends State<productDetails> {
                                         );
                                         Scaffold.of(context).showBottomSheet(
                                             (context) => snackBar);
-
-                                        cartlist.addProduct(widget.product);
                                       },
                                       child: Row(
                                         children: [
@@ -207,8 +198,39 @@ class _productDetailsState extends State<productDetails> {
                                       ),
                                     );
                                   }
-                                  ;
                                 }
+                                return InkWell(
+                                  onTap: () {
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                          "${widget.product.name} added to the cart"),
+                                      duration: Duration(milliseconds: 550),
+                                    );
+                                    Scaffold.of(context).showBottomSheet(
+                                            (context) => snackBar);
+
+                                    cartlist.removeProduct(widget.product);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      FloatingActionButton.extended(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.check_circle,
+                                            color: Colors.white,
+                                          ),
+                                          label: Text(
+                                            'Add To Cart',
+                                            style: TextStyle(
+                                                fontSize: 15.sp,
+                                                color: Colors.white,
+                                                fontWeight:
+                                                FontWeight.bold),
+                                          ))
+                                    ],
+                                  ),
+                                );
+
                               }))))
             ])),
           ),
