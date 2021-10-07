@@ -5,10 +5,10 @@ import 'package:second_project/Screens/productDetails.dart';
 import 'package:second_project/models/product.dart';
 import 'package:second_project/providers/cartprovid.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-class cartScreen extends StatefulWidget {
 
+class cartScreen extends StatefulWidget {
   Product product;
-cartScreen({this.product});
+  cartScreen({this.product});
 
   @override
   _cartScreenState createState() => _cartScreenState();
@@ -17,60 +17,85 @@ cartScreen({this.product});
 class _cartScreenState extends State<cartScreen> {
   @override
   Widget build(BuildContext context) {
-    var cartList =Provider.of<CartList>(context).cartList;
+    var cartList = Provider.of<CartList>(context).cartList;
     return Scaffold(
-
       body: ListView.builder(
-itemCount:cartList.length ,
-
-          itemBuilder: (context,index)
-          {
+          itemCount: cartList.length,
+          itemBuilder: (context, index) {
             return Padding(
-              padding:  EdgeInsets.all(7.h),
-              child: Container(
-
-
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 100.h,
-                      width: 100.w,
-                      child: CircleAvatar(radius: 60,
-                      backgroundImage: AssetImage(cartList[index].imgurl),
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: EdgeInsets.all(7.h),
+              child: Column(
+                children: [
+                  Container(
+                    child: Row(
                       children: [
-                        Text(cartList[index].name,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,
-                          fontSize: 20.sp,)),
-                        Text(cartList[index].type,style: TextStyle(color: Colors.grey, ),),
-                        Text(cartList[index].price,style: TextStyle(color: Colors.deepPurple ),)
+                        SizedBox(
+                          height: 100.h,
+                          width: 100.w,
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundImage: AssetImage(cartList[index].imgurl),
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(cartList[index].name,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.sp,
+                                )),
+                            Text(
+                              cartList[index].type,
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              cartList[index].price,
+                              style: TextStyle(color: Colors.deepPurple),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.h),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.h),
+                                child: Text(
+                                  'عدد القطع المطلوبه',
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 11.sp),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(6.h),
+                                child: Text('50'),
+                              )
+                            ],
+                          ),
+                        ),
+
                       ],
                     ),
-                    Padding(
-                      padding:  EdgeInsets.all(8.h),
-                      child: Column(
-                        children: [
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                        width: .90.sw,
+                        child: Divider(
+                          color: Colors.black26,
+                          thickness: 4,
 
-                          Padding(
-                            padding:  EdgeInsets.all(8.h),
-                            child: Text('عدد القطع المطلوبه',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold,fontSize: 11.sp),),
-                          ),
-                          Padding(
-                            padding:  EdgeInsets.all(6.h),
-                            child: Text('50'),
-                          )
-
-
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-
-
+                        )),
+                  ),
+                ],
               ),
+
             );
           }),
     );

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:second_project/Screens/cartScreen.dart';
 import 'package:second_project/models/product.dart';
 import 'package:second_project/providers/cartprovid.dart';
 
@@ -15,8 +16,6 @@ class productDetails extends StatefulWidget {
 }
 
 class _productDetailsState extends State<productDetails> {
-
-
   int i = 0;
   List<Product> products = [
     Product(
@@ -43,7 +42,7 @@ class _productDetailsState extends State<productDetails> {
                 tag: "image-${widget.product.imgurl}",
                 child: Image.asset(
                   widget.product.imgurl,
-                  width: 500.w,
+                  width: double.infinity,
                   height: 350.h,
                 )),
           ),
@@ -73,6 +72,56 @@ class _productDetailsState extends State<productDetails> {
                   color: Colors.deepPurple,
                 ),
               )),
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              i -= 1;
+                            });
+                          },
+                          child: Icon(
+                            Icons.remove,
+                            size: 35.sp,
+                          )),
+                    ),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        i.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30.sp),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              i += 1;
+                            });
+                          },
+                          child: Icon(
+                            Icons.add,
+                            size: 35.sp,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           Row(
             children: [
               Padding(
@@ -90,149 +139,118 @@ class _productDetailsState extends State<productDetails> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(120.h, 8.h, 150.h, 8.h),
+            padding: EdgeInsets.only(bottom: 8.h),
             child: Align(
-              alignment: Alignment.center,
-              child: Row(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                          i -= 1;
-                        });
-                      },
-                      child: Icon(
-                        Icons.remove,
-                        size: 20.sp,
-                      )),
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(2.h),
-                      child: Text(
-                        i.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30.sp),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                          i += 1;
-                        });
-                      },
-                      child: Icon(
-                        Icons.add,
-                        size: 20.sp,
-                      )),
-                ],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-                child: Row(children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(10.h, 30.h, 53.h, 0.h),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(18.h)),
-                      child: TextButton(
-                          onPressed: () {},
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10.h, right: 10.h),
-                            child: Text(
-                              widget.product.price,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ))),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(0.h, 30.h, 10.h, 0.h),
+              alignment: Alignment.bottomRight,
+              child: Container(
+                  child: Row(children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10.h, 30.h, 53.h, 0.h),
                   child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black87,
-                              borderRadius: BorderRadius.circular(15.h)),
-                          child: Consumer<CartList>(
-                              builder: (context, cartlist,child) {
-                                for (var product in cartlist.cartList) {
-                                  if (product == widget.product) {
-                                    return InkWell(
-                                      onTap: () {
-                                        cartlist.addProduct(widget.product);
-                                        final snackBar = SnackBar(
-                                          content: Text(
-                                              "${widget.product.name} added to the cart"),
-                                          duration: Duration(milliseconds: 550),
-                                        );
-                                        Scaffold.of(context).showBottomSheet(
-                                            (context) => snackBar);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          FloatingActionButton.extended(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.check_circle,
-                                                color: Colors.white,
-                                              ),
-                                              label: Text(
-                                                'Add To Cart',
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ))
-                                        ],
-                                      ),
-                                    );
-                                  }
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(18.h)),
+                        child: TextButton(
+                            onPressed: () {},
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 10.h, right: 10.h),
+                              child: Text(
+                                widget.product.price,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ))),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0.h, 30.h, 10.h, 0.h),
+                    child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black87,
+                                borderRadius: BorderRadius.circular(15.h)),
+                            child: Consumer<CartList>(
+                                builder: (context, cartList, child) {
+                              for (var product in cartList.cartList) {
+                                if (product == widget.product) {
+                                  return InkWell(
+                                    onTap: () {
+                                      cartList.removeProduct(widget.product);
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text(widget.product.name +'  Removed From the cart'),
+                                        backgroundColor: Colors.red,
+                                        duration: Duration(milliseconds: 550),
+                                      ));
+                                    },
+                                    onDoubleTap: (){
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                            return cartScreen(
+                                              product: widget.product,
+                                            );
+                                          }));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        FloatingActionButton.extended(
+                                            icon: Icon(
+                                              Icons.check_circle,
+                                              color: Colors.white,
+                                            ),
+                                            label: Text(
+                                              'Add To Cart',
+                                              style: TextStyle(
+                                                  fontSize: 15.sp,
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                      FontWeight.bold),
+                                            ))
+                                      ],
+                                    ),
+                                  );
                                 }
-                                return InkWell(
-                                  onTap: () {
-                                    final snackBar = SnackBar(
-                                      content: Text(
-                                          "${widget.product.name} added to the cart"),
-                                      duration: Duration(milliseconds: 550),
-                                    );
-                                    Scaffold.of(context).showBottomSheet(
-                                            (context) => snackBar);
-
-                                    cartlist.removeProduct(widget.product);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      FloatingActionButton.extended(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.check_circle,
-                                            color: Colors.white,
-                                          ),
-                                          label: Text(
-                                            'Add To Cart',
-                                            style: TextStyle(
-                                                fontSize: 15.sp,
-                                                color: Colors.white,
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ))
-                                    ],
-                                  ),
-                                );
-
-                              }))))
-            ])),
+                              }
+                              return InkWell(
+                                onTap: () {
+                                  cartList.addProduct(widget.product);
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(widget.product.name +'  Added From the cart'),
+                                    backgroundColor: Colors.grey,
+                                  ));
+                                },
+                                onDoubleTap: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return cartScreen(
+                                          product: widget.product,
+                                        );
+                                      }));
+                                },
+                                child: Row(
+                                  children: [
+                                    FloatingActionButton.extended(
+                                        icon: Icon(
+                                          Icons.check_circle_outline,
+                                          color: Colors.white,
+                                        ),
+                                        label: Text(
+                                          'Add To Cart',
+                                          style: TextStyle(
+                                              fontSize: 15.sp,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ))
+                                  ],
+                                ),
+                              );
+                            }))))
+              ])),
+            ),
           ),
         ]),
       ),

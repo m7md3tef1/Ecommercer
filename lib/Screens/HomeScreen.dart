@@ -232,152 +232,150 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Expanded(
-            child: Container(
-              height: MediaQuery.of(context).size.height * .50,
-              child: ListView.builder(
-                  itemCount: name.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return productDetails(
-                            product: products[index],
-                          );
-                        }));
-                      },
-                      child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Consumer<FavouriteList>(
-                              builder: (context, favList, child) {
-                            for (var procuct in favList.favList) {
-                              if (procuct == products[index]) {
-                                return InkWell(
-                                  onTap: () {
-                                    favList.removeProduct(products[index]);
-                                  },
-                                  child: Badge(
-                                    badgeContent: Icon(Icons.favorite),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          color: Colors.white,
-                                          child: Hero(
-                                            tag: "image-${picture[index]}",
-                                            child: Image(
-                                              fit: BoxFit.cover,
-                                              image: AssetImage(picture[index]),
-                                              width: 180,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  .50,
-                                            ),
-                                          ),
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  .3,
-                                          width: 270,
-                                        ),
-                                        Hero(
-                                          tag: "name-${name[index]}",
-                                          child: Text(
-                                            name[index],
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
+          Container(
+            height: MediaQuery.of(context).size.height * .50,
+            child: ListView.builder(
+                itemCount: products.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return productDetails(
+                          product: products[index],
+                        );
+                      }));
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Consumer<FavouriteList>(
+                            builder: (context, favList, child) {
+                          for (var procuct in favList.favList) {
+                            if (procuct == products[index]) {
+                              return InkWell(
+                                onTap: () {
+                                  favList.removeProduct(products[index]);
+                                },
+                                child: Badge(
+                                  badgeContent: Icon(Icons.favorite),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        color: Colors.white,
+                                        child: Hero(
+                                          tag: "image-${picture[index]}",
+                                          child: Image(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(picture[index]),
+                                            width: 180,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                .50,
                                           ),
                                         ),
-                                        Hero(
-                                          tag: "type-${type[index]}",
-                                          child: Text(
-                                            type[index],
-                                            style: TextStyle(
-                                                color: Colors.grey, fontSize: 15),
-                                          ),
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .3,
+                                        width: 270,
+                                      ),
+                                      Hero(
+                                        tag: "name-${name[index]}",
+                                        child: Text(
+                                          name[index],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Hero(
-                                          tag: "price-${price[index]}",
-                                          child: Text(
-                                            price[index],
-                                            style: TextStyle(
-                                                color: Colors.deepPurple,
-                                                fontSize: 20),
-                                          ),
+                                      ),
+                                      Hero(
+                                        tag: "type-${type[index]}",
+                                        child: Text(
+                                          type[index],
+                                          style: TextStyle(
+                                              color: Colors.grey, fontSize: 15),
                                         ),
-                                      ],
+                                      ),
+                                      Hero(
+                                        tag: "price-${price[index]}",
+                                        child: Text(
+                                          price[index],
+                                          style: TextStyle(
+                                              color: Colors.deepPurple,
+                                              fontSize: 20),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                          return InkWell(
+                            onTap: () {
+                              favList.addProduct(products[index]);
+                            },
+                            child: Badge(
+                              badgeContent:
+                              Icon(Icons.favorite_border_outlined),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    color: Colors.white,
+                                    child: Hero(
+                                      tag: "image-${picture[index]}",
+                                      child: Image(
+                                        image: AssetImage(picture[index]),
+                                        width: 180,
+                                        height: MediaQuery.of(context)
+                                            .size
+                                            .height *
+                                            .50,
+                                      ),
+                                    ),
+                                    height:
+                                    MediaQuery.of(context).size.height *
+                                        .3,
+                                    width: 270,
+                                  ),
+                                  Hero(
+                                    tag: "name-${name[index]}",
+                                    child: Text(
+                                      name[index],
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                );
-                              }
-                            }
-                            return InkWell(
-                              onTap: () {
-                                favList.addProduct(products[index]);
-                              },
-                              child: Badge(
-                                badgeContent:
-                                Icon(Icons.favorite_border_outlined),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      color: Colors.white,
-                                      child: Hero(
-                                        tag: "image-${picture[index]}",
-                                        child: Image(
-                                          image: AssetImage(picture[index]),
-                                          width: 180,
-                                          height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                              .50,
-                                        ),
-                                      ),
-                                      height:
-                                      MediaQuery.of(context).size.height *
-                                          .3,
-                                      width: 270,
+                                  Hero(
+                                    tag: "type-${type[index]}",
+                                    child: Text(
+                                      type[index],
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 15),
                                     ),
-                                    Hero(
-                                      tag: "name-${name[index]}",
-                                      child: Text(
-                                        name[index],
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                  ),
+                                  Hero(
+                                    tag: "price-${price[index]}",
+                                    child: Text(
+                                      price[index],
+                                      style: TextStyle(
+                                          color: Colors.deepPurple,
+                                          fontSize: 20),
                                     ),
-                                    Hero(
-                                      tag: "type-${type[index]}",
-                                      child: Text(
-                                        type[index],
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 15),
-                                      ),
-                                    ),
-                                    Hero(
-                                      tag: "price-${price[index]}",
-                                      child: Text(
-                                        price[index],
-                                        style: TextStyle(
-                                            color: Colors.deepPurple,
-                                            fontSize: 20),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            );
-                          }
-                          )
-                      ),
-                    );
-                  }),
-            ),
+                            ),
+                          );
+                        }
+                        )
+                    ),
+                  );
+                }),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
