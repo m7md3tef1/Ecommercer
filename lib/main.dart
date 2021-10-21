@@ -12,7 +12,7 @@ import 'package:second_project/Screens/forgetpass.dart';
 import 'package:second_project/Screens/introScreen.dart';
 import 'package:second_project/Screens/productDetails.dart';
 import 'package:second_project/Screens/signinScreen.dart';
-import 'package:second_project/Screens/signoutScreen.dart';
+import 'package:second_project/Screens/SignUpScreen.dart';
 import 'package:second_project/Screens/splashScreen.dart';
 import 'package:second_project/Screens/user%20or%20admin.dart';
 import 'package:second_project/providers/cartprovid.dart';
@@ -50,7 +50,6 @@ class _commecerState extends State<commecer> {
       ScreenUtilInit(
         builder:()=> MaterialApp(
         theme: Provider.of<Themeprovider>(context).islight ==true?lightMode:darkMode,
-
         debugShowCheckedModeBanner: false,
          initialRoute: 'SplashScreen',
          routes: {

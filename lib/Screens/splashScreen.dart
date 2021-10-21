@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:second_project/Screens/HomeScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,11 +13,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-String isFirst;
+bool isFirst=false;
+bool Signin=true;
 checkIsScreenState()async{
   SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
   setState(() {
-    isFirst=sharedPreferences.getString('firstTime');
+    isFirst=sharedPreferences.getBool('firstTime');
+    Signin=sharedPreferences.getBool('Sign');
   });
 }
 
@@ -27,7 +30,7 @@ checkIsScreenState()async{
     checkIsScreenState();
     Timer(Duration(seconds: 3),
             (){
-Navigator.popAndPushNamed(context,isFirst==null?'IntroScreen':'SigninScreen');
+Navigator.popAndPushNamed(context,isFirst?'IntroScreen':Signin?'useroradmin':'SigninScreen');
             } );
     print('hello');
   }

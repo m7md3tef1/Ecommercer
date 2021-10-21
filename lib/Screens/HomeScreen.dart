@@ -5,6 +5,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import 'package:second_project/Screens/CategoryScreen.dart';
 import 'package:second_project/Screens/productDetails.dart';
+import 'package:second_project/Services/authFile.dart';
 import 'package:second_project/models/product.dart';
 import 'package:second_project/providers/favProvid.dart';
 import 'package:second_project/providers/themeproviders.dart';
@@ -18,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var scaffoldkey = GlobalKey<ScaffoldState>();
+  var auth = AuthClass();
   List categories = [
     'Burger',
     'butter chicken',
@@ -64,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       price: '7.49 L.E',
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,17 +112,34 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(12,20,12,12),
               child: Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
-                    child: Text('Change Color'),
+                    child: Text('Change Color',style: TextStyle(color: Colors.black54,fontSize: 15),),
                     onPressed: () {
                       Provider.of<Themeprovider>(context, listen: false)
                           .changeTheme();
                     },
                   )),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12,20,12,12),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    children: [
+
+                      TextButton(
+                        child: Text('Sign Out',style: TextStyle(color: Colors.black54,fontSize: 15),),
+                        onPressed: () {
+                        auth.Signout();
+                        Navigator.pushNamed(context,'SigninScreen');
+                        },
+                      ),
+                    ],
+                  )),
+            ),
           ],
         ),
       ),

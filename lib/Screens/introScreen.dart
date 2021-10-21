@@ -12,7 +12,7 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
  forFirstTime()async{
    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-   sharedPreferences.setString('firstTime','yes');
+   sharedPreferences.setBool('firstTime',false);
  }
 
   @override

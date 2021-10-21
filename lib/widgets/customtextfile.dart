@@ -9,7 +9,8 @@ class CustomTextFormField extends StatefulWidget {
   bool secure;
   Function onsaved;
   Function validator;
-  CustomTextFormField({this.name, this.hint,this.icondata,this.secure,this.onsaved,this.validator,this.suffix});
+  TextEditingController controller;
+  CustomTextFormField({this.name, this.controller,this.hint,this.icondata,this.secure,this.onsaved,this.validator,this.suffix});
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
 }
@@ -27,6 +28,7 @@ class _CustomTextFieldState extends State<CustomTextFormField> {
                 widget.name,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)  ),
 
           TextFormField(
+            controller:widget.controller,
             onSaved: widget.onsaved,
             validator: widget.validator,
             obscureText:widget.secure ,

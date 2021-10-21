@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   String price = '';
   String Description = '';
   String size = '';
-  String link='';
+  String link = '';
   PickedFile c;
   File e;
 
@@ -31,61 +31,66 @@ class _AddProductScreenState extends State<AddProductScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(12.0),
-          child: InkWell(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return SimpleDialog(
-                      children: [
-                        SimpleDialogOption(
-                          child: Text('Pick Photo'),
+          child:
+          SingleChildScrollView(
+            child: SafeArea(
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return SimpleDialog(
+                          children: [
+                            SimpleDialogOption(
+                              child: Text('Pick Photo'),
+                            ),
+                            SimpleDialogOption(
+                              child: InkWell(
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                    c = await ImagePicker.platform
+                                        .pickImage(source: ImageSource.gallery);
+                                    setState(() {
+                                      e = File(c.path);
+                                    });
+                                  },
+                                  child: Text('Pick From Gallery')),
+                            ),
+                            SimpleDialogOption(
+                              child: InkWell(
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                    c = await ImagePicker.platform
+                                        .pickImage(source: ImageSource.camera);
+                                    setState(() {
+                                      e = File(c.path);
+                                    });
+                                  },
+                                  child: Text('Pick From Camera')),
+                            ),
+                          ],
+                        );
+                      });
+                },
+                child: c == null
+                    ? Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.deepPurple),
                         ),
-                        SimpleDialogOption(
-                          child: InkWell(
-                              onTap: () async {
-                                Navigator.pop(context);
-                                c = await ImagePicker.platform
-                                    .pickImage(source: ImageSource.gallery);
-                                setState(() {
-                                  e=File(c.path);
-                                });
-                              },
-                              child: Text('Pick From Gallery')),
-                        ),
-                        SimpleDialogOption(
-                          child: InkWell(
-                              onTap: () async {
-                                Navigator.pop(context);
-                                c = await ImagePicker.platform
-                                    .pickImage(source: ImageSource.camera);
-                                setState(() {
-                                  e=File(c.path);
-                                });
-                              },
-                              child: Text('Pick From Camera')),
-                        ),
-                      ],
-                    );
-                  });
-            },
-            child: c == null
-                ? Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.deepPurple),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(60.0),
-                      child: Icon(
-                        Icons.add_a_photo_outlined,
-                        color: Colors.deepPurple,
-                        size: 40,
+                        child: Padding(
+                          padding: const EdgeInsets.all(60.0),
+                          child: Icon(
+                            Icons.add_a_photo_outlined,
+                            color: Colors.deepPurple,
+                            size: 40,
+                          ),
+                        ))
+                    : Image.file(
+                        File(c.path),
+                        fit: BoxFit.contain,
                       ),
-                    ))
-                : Image.file(
-                    File(c.path),
-                    fit: BoxFit.contain,
-                  ),
+              ),
+            ),
           ),
         ),
         Padding(
@@ -94,53 +99,93 @@ class _AddProductScreenState extends State<AddProductScreen> {
             key: adminKey,
             child: Column(
               children: [
-                CustomTextForm(
-                  'Product Name',
-                  (v) {
-                    setState(() {
-                      Name = v;
-                    });
-                  },
-                ),
-                CustomTextForm(
-                  'Product Price',
-                  (v) {
-                    setState(() {
-                      price = v;
-                    });
-                  },
-                ),
-                CustomTextForm(
-                  'Product Description',
-                  (v) {
-                    setState(() {
-                      Description = v;
-                    });
-                  },
-                ),
-                CustomTextForm(
-                  'Product Size',
-                  (v) {
-                    setState(() {
-                      size = v;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomTextForm(
+                    'Product Name',
+                    (v) {
+                      setState(() {
+                        Name = v;
+                      });
+                    },
+                        (v){
+                      if(v.toString().isEmpty){
+                        return'Please Enter Name';
+                      }
+                    },
+
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 12, 40, 12),
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomTextForm(
+                    'Product Price',
+                    (v) {
+                      setState(() {
+                        price = v;
+                      });
+                    },
+                        (v){
+    if(v.toString().isEmpty){
+    return'Please Enter Price';
+    }
+    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomTextForm(
+                    'Product Description',
+                    (v) {
+                      setState(() {
+                        Description = v;
+                      });
+                    },
+                        (v){
+                      if(v.toString().isEmpty){
+                        return'Please Enter Description ';
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomTextForm(
+                    'Product Size',
+                    (v) {
+                      setState(() {
+                        size = v;
+                      });
+                    },
+                        (v){
+                      if(v.toString().isEmpty){
+                        return'Please Enter Size ';
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .06,
+                ),
+                Padding(
+                  padding:  EdgeInsets.fromLTRB(20.h ,12.h, 20.h, 12.h),
                   child: InkWell(
                     onTap: () async {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text( Name+ ' Is Added'),backgroundColor: Colors.deepPurple[300],duration: Duration(milliseconds: 5),));
                       adminKey.currentState.save();
-                      await  FirebaseStorage.instanceFor(
-                          bucket: 'gs://ecommercer-ef073.appspot.com')
+                      adminKey.currentState.validate();
+                      await FirebaseStorage.instanceFor(
+                              bucket: 'gs://ecommercer-ef073.appspot.com')
                           .ref(c.path)
                           .putFile(e);
-                      var url=  await FirebaseStorage.instanceFor(
-                          bucket: 'gs://ecommercer-ef073.appspot.com')
-                          .ref(c.path).getDownloadURL();
+                      var url = await FirebaseStorage.instanceFor(
+                              bucket: 'gs://ecommercer-ef073.appspot.com')
+                          .ref(c.path)
+                          .getDownloadURL();
                       print(url);
                       setState(() {
-                        link =url;
+                        link = url;
                       });
                       await FirebaseFirestore.instance
                           .collection('Product')
@@ -149,9 +194,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         'prise': price,
                         'Description': Description,
                         'size': size,
-                        'link':link,
+                        'link': link,
                       });
-
 
                     },
                     child: Container(
@@ -198,10 +242,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
   TextFormField CustomTextForm(
     label,
     onSaved,
+      validator
   ) {
     return TextFormField(
-      decoration: InputDecoration(labelText: label),
-      onSaved: onSaved,
+      decoration: InputDecoration(labelText: label,
+          border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5)),
+    focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(30),
+    ),
+      ),
+      onSaved: onSaved,validator: validator,
+
     );
   }
 }

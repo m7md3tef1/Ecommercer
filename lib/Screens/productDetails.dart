@@ -181,19 +181,21 @@ class _productDetailsState extends State<productDetails> {
                                   return InkWell(
                                     onTap: () {
                                       cartList.removeProduct(widget.product);
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                        content: Text(widget.product.name +'  Removed From the cart'),
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(widget.product.name +
+                                          '  Removed From the cart'),
                                         backgroundColor: Colors.red,
                                         duration: Duration(milliseconds: 550),
                                       ));
                                     },
-                                    onDoubleTap: (){
+                                    onDoubleTap: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                            return cartScreen(
-                                              product: widget.product,
-                                            );
-                                          }));
+                                        return cartScreen(
+                                          product: widget.product,
+                                        );
+                                      }));
                                     },
                                     child: Row(
                                       children: [
@@ -207,8 +209,7 @@ class _productDetailsState extends State<productDetails> {
                                               style: TextStyle(
                                                   fontSize: 15.sp,
                                                   color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.bold),
+                                                  fontWeight: FontWeight.bold),
                                             ))
                                       ],
                                     ),
@@ -218,18 +219,20 @@ class _productDetailsState extends State<productDetails> {
                               return InkWell(
                                 onTap: () {
                                   cartList.addProduct(widget.product);
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text(widget.product.name +'  Added From the cart'),
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(widget.product.name +
+                                        '  Added From the cart'),
                                     backgroundColor: Colors.grey,
                                   ));
                                 },
-                                onDoubleTap: (){
+                                onDoubleTap: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                        return cartScreen(
-                                          product: widget.product,
-                                        );
-                                      }));
+                                    return cartScreen(
+                                      product: widget.product,
+                                    );
+                                  }));
                                 },
                                 child: Row(
                                   children: [

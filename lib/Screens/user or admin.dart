@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class useroradminScreen extends StatefulWidget {
   const useroradminScreen({Key key}) : super(key: key);
@@ -10,7 +11,15 @@ class useroradminScreen extends StatefulWidget {
 }
 
 class _useroradminScreenState extends State<useroradminScreen> {
+  forSignin()async{
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    sharedPreferences.setBool('Sign',true);
+  }
   @override
+  initState(){
+    super.initState();
+    forSignin();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
