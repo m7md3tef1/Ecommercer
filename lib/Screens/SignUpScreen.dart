@@ -139,28 +139,31 @@ class _SignupScreenState extends State<SignoutScreen> {
                 child: InkWell(
                   onTap: () async {
                     Provider.of<ModalHud>(context,listen: false).changeIsLoading(true);
-                    try {
-                      signupKey.currentState.save();
+
                       if (signupKey.currentState.validate()) {
-                        await auth.signup(email, pass,name);
-                        Provider.of<ModalHud>(context, listen: false)
-                            .changeIsLoading(false);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, 'HomeScreen', (route) => false);
+                        signupKey.currentState.save();
+                        try {
+                          await auth.signup(email, pass, name);
+                          Provider.of<ModalHud>(context, listen: false)
+                              .changeIsLoading(false);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, 'HomeScreen', (route) => false);
+                        }
+                        catch (e) {
+                          Provider.of<ModalHud>(context, listen: false)
+                              .changeIsLoading(false);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(e.toString()),
+                            backgroundColor: Colors.red,
+                          ));
+                        }
                       } else {
                         Provider.of<ModalHud>(context, listen: false)
                             .changeIsLoading(false);
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Complete Require Data')));
                       }
-                    } catch (e) {
-                      Provider.of<ModalHud>(context, listen: false)
-                          .changeIsLoading(false);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(e.toString()),
-                        backgroundColor: Colors.red,
-                      ));
-                    }
+
                   },
                   child: Container(
                     decoration: BoxDecoration(

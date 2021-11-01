@@ -16,7 +16,6 @@ class productDetails extends StatefulWidget {
 }
 
 class _productDetailsState extends State<productDetails> {
-  int i = 0;
   List<Product> products = [
     Product(
       imgurl: 'image/5.jpg',
@@ -83,9 +82,11 @@ class _productDetailsState extends State<productDetails> {
                       alignment: Alignment.centerLeft,
                       child: InkWell(
                           onTap: () {
-                            setState(() {
-                              i -= 1;
-                            });
+
+                             setState(() {
+                               widget.product.i >(0)?-- widget.product.i:widget.product.i=0 ;
+                             });
+
                           },
                           child: Icon(
                             Icons.remove,
@@ -96,7 +97,7 @@ class _productDetailsState extends State<productDetails> {
                   Expanded(
                     child: Center(
                       child: Text(
-                        i.toString(),
+                       widget.product.i.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30.sp),
                       ),
@@ -109,7 +110,7 @@ class _productDetailsState extends State<productDetails> {
                       child: InkWell(
                           onTap: () {
                             setState(() {
-                              i += 1;
+                             ++ widget.product.i ;
                             });
                           },
                           child: Icon(
@@ -259,4 +260,5 @@ class _productDetailsState extends State<productDetails> {
       ),
     );
   }
+
 }

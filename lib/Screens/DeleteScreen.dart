@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:second_project/models/product.dart';
@@ -16,8 +18,7 @@ class _DeleteProductState extends State<DeleteProduct> {
       appBar: AppBar(
         title: Text('Delete Product'),
       ),
-      body: 
-      SafeArea(
+      body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
             stream: getProducts(),
             builder: (context, snapShots) {
@@ -34,26 +35,45 @@ class _DeleteProductState extends State<DeleteProduct> {
                   ));
                 }
               }
-
               return GridView.builder(
                   itemCount: products.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                      childAspectRatio: .7, crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        FirebaseFirestore.instance
-                            .collection('Product')
-                            .doc(products[index].id)
-                            .delete();
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SimpleDialog(
+                                title: Text('Sure Delete'),
+                                children: [
+                                  SimpleDialogOption(
+                                    child: InkWell(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('Cancel')),
+                                  ),
+                                  SimpleDialogOption(
+                                    child: InkWell(
+                                        onTap: () {
+                                          FirebaseFirestore.instance
+                                              .collection('Product')
+                                              .doc(products[index].id)
+                                              .delete();
+                                        },
+                                        child: Text('Delete')),
+                                  ),
+                                ],
+                              );
+                            });
                       },
                       child: Column(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: SizedBox(
-                              height: 90.h,
-                              width: 150.w,
                               child: Container(
                                 decoration: BoxDecoration(
                                     color: Colors.grey[200],

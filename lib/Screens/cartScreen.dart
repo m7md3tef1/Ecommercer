@@ -24,76 +24,113 @@ class _cartScreenState extends State<cartScreen> {
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.all(7.h),
-              child: Column(
-                children: [
-                  Container(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: 100.h,
-                          width: 100.w,
-                          child: CircleAvatar(
-                            radius: 60,
-                            backgroundImage: AssetImage(cartList[index].imgurl),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: SingleChildScrollView(
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Row(
                           children: [
-                            Text(cartList[index].name,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.sp,
-                                )),
-                            Text(
-                              cartList[index].type,
-                              style: TextStyle(
-                                color: Colors.grey,
+                            SizedBox(
+                              height: 80.h,
+                              width: 80.w,
+                              child: CircleAvatar(
+                                radius: 60,
+                                backgroundImage: AssetImage(cartList[index].imgurl),
                               ),
                             ),
-                            Text(
-                              cartList[index].price,
-                              style: TextStyle(color: Colors.deepPurple),
-                            )
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(cartList[index].name,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.sp,
+                                    )),
+                                Text(
+                                  cartList[index].type,
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  cartList[index].price.toString(),
+                                  style: TextStyle(
+                                    color: Colors.deepPurple,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(5.h),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(3.h),
+                                        child:
+
+                                        Text(cartList[index].i.toString(),
+                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                      )
+                                    ),
+                                      Padding(
+                                        padding: EdgeInsets.all(5.h),
+                                        child: Text(
+                                          ':عدد القطع المطلوبه',
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 11.sp),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(5.h),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.all(3.h),
+                                          child: Text( cartList[index].price.toString(),
+                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                          )
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(5.h),
+                                        child: Text(
+                                          ':احمالى المبلغ',
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 11.sp),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(8.h),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(8.h),
-                                child: Text(
-                                  'عدد القطع المطلوبه',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 11.sp),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(6.h),
-                                child: Text('50'),
-                              )
-                            ],
-                          ),
-                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                            width: .90.sw,
+                            child: Divider(
+                              color: Colors.black26,
+                              thickness: 4,
 
-                      ],
-                    ),
+                            )),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                        width: .90.sw,
-                        child: Divider(
-                          color: Colors.black26,
-                          thickness: 4,
-
-                        )),
-                  ),
-                ],
+                ),
               ),
 
             );

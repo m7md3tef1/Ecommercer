@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text('Sign Out',style: TextStyle(color: Colors.black54,fontSize: 15),),
                         onPressed: () {
                         auth.Signout();
-                        Navigator.pushNamed(context,'SigninScreen');
+                        Navigator.pushNamed(context, 'SigninScreen');
                         },
                       ),
                     ],
