@@ -18,6 +18,7 @@ class _cartScreenState extends State<cartScreen> {
   @override
   Widget build(BuildContext context) {
     var cartList = Provider.of<CartList>(context).cartList;
+    dynamic count=2;
     return Scaffold(
       body: ListView.builder(
           itemCount: cartList.length,
@@ -72,7 +73,7 @@ class _cartScreenState extends State<cartScreen> {
                                         padding: EdgeInsets.all(3.h),
                                         child:
 
-                                        Text(cartList[index].i.toString(),
+                                        Text(cartList[index].counter.toString(),
                                             style: TextStyle(fontWeight: FontWeight.bold),
                                       )
                                     ),
@@ -91,24 +92,25 @@ class _cartScreenState extends State<cartScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.all(5.h),
-                                  child: Row(
+                                  child: Column(
                                     children: [
                                       Padding(
-                                          padding: EdgeInsets.all(3.h),
-                                          child: Text( cartList[index].price.toString(),
+                                      padding: EdgeInsets.all(4.h),
+                                      child: Text(
+                                        ':اجمالى المبلغ',
+                                        style: TextStyle(
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11.sp),
+                                      ),
+                                    ),
+                                      Padding(
+                                          padding: EdgeInsets.only(top:2.h),
+                                          child: Text( (cartList[index].price.toString()*count),
                                             style: TextStyle(fontWeight: FontWeight.bold),
                                           )
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.all(5.h),
-                                        child: Text(
-                                          ':احمالى المبلغ',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 11.sp),
-                                        ),
-                                      ),
+
                                     ],
                                   ),
                                 ),

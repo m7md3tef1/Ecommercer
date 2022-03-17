@@ -16,19 +16,20 @@ class productDetails extends StatefulWidget {
 }
 
 class _productDetailsState extends State<productDetails> {
+
   List<Product> products = [
     Product(
       imgurl: 'image/5.jpg',
       name: 'jorden',
       type: 'jorden Nike',
-      price: '700 L.E',
+      price: '700 ',
     ),
     Product(
       imgurl:
           'image/IW503605_tile_1.717.jpg.transform.article_image_335_2x.webp',
       name: 'Oleves',
       type: 'Classic WatchMer',
-      price: '4500 L.E',
+      price: '4500 ',
     ),
   ];
   @override
@@ -83,9 +84,11 @@ class _productDetailsState extends State<productDetails> {
                       child: InkWell(
                           onTap: () {
 
-                             setState(() {
-                               widget.product.i >(0)?-- widget.product.i:widget.product.i=0 ;
-                             });
+                            setState(() {
+                               widget.product.counter >(1)?   widget.product.counter=widget.product.counter -1:widget.product.counter=0;
+                            }) ;
+
+
 
                           },
                           child: Icon(
@@ -97,7 +100,7 @@ class _productDetailsState extends State<productDetails> {
                   Expanded(
                     child: Center(
                       child: Text(
-                       widget.product.i.toString(),
+                      '2',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30.sp),
                       ),
@@ -110,8 +113,10 @@ class _productDetailsState extends State<productDetails> {
                       child: InkWell(
                           onTap: () {
                             setState(() {
-                             ++ widget.product.i ;
+                              widget.product.counter=widget.product.counter +1;
                             });
+
+                              // p.plus() ;
                           },
                           child: Icon(
                             Icons.add,

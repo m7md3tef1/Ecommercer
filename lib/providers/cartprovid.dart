@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:second_project/models/product.dart';
-import 'package:flutter/cupertino.dart';
 
 class CartList extends ChangeNotifier
 {

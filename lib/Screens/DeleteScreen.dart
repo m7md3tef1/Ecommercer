@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -23,116 +22,119 @@ class _DeleteProductState extends State<DeleteProduct> {
             stream: getProducts(),
             builder: (context, snapShots) {
               List<Product> products = [];
-              if (snapShots.hasData) {
-                for (var doc in snapShots.data.docs) {
-                  products.add(Product(
-                    id: doc.id,
-                    name: doc.get('name'),
-                    Description: doc['Description'],
-                    price: doc.get('prise'),
-                    Size: doc.get('size'),
-                    imgurl: doc.get('link'),
-                  ));
-                }
+              for (var doc in snapShots.data.docs) {
+                products.add(Product(
+                  id: doc.id,
+                  name: doc.get('name'),
+                  Description: doc['Description'],
+                  price: doc.get('prise'),
+                  Size: doc.get('size'),
+                  imgurl: doc.get('link'),
+                ));
               }
-              return GridView.builder(
-                  itemCount: products.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: .7, crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return SimpleDialog(
-                                title: Text('Sure Delete'),
-                                children: [
-                                  SimpleDialogOption(
-                                    child: InkWell(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text('Cancel')),
-                                  ),
-                                  SimpleDialogOption(
-                                    child: InkWell(
-                                        onTap: () {
-                                          FirebaseFirestore.instance
-                                              .collection('Product')
-                                              .doc(products[index].id)
-                                              .delete();
-                                        },
-                                        child: Text('Delete')),
-                                  ),
-                                ],
-                              );
-                            });
-                      },
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: SizedBox(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image:
-                                          NetworkImage(products[index].imgurl),
-                                    )),
+              if (snapShots.hasData) {
+                return GridView.builder(
+                    itemCount: products.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: .7, crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  title: Text('Sure Delete'),
+                                  children: [
+                                    SimpleDialogOption(
+                                      child: InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancel')),
+                                    ),
+                                    SimpleDialogOption(
+                                      child: InkWell(
+                                          onTap: ()async {
+                                            await  FirebaseFirestore.instance
+                                                .collection('Product')
+                                                .doc(products[index].id)
+                                                .delete();
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Delete')),
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: SizedBox(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image:
+                                        NetworkImage(products[index].imgurl),
+                                      )),
+                                ),
                               ),
                             ),
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      'Name: ',
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        'Name: ',
+                                        style: TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    products[index].name,
-                                    style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      'Price:  ',
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Text(products[index].price,
+                                    Text(
+                                      products[index].name,
                                       style: TextStyle(
                                           color: Colors.black87,
                                           fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  });
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        'Price:  ',
+                                        style: TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Text(products[index].price,
+                                        style: TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              }
+                return Text('No Date');
+
             }),
       ),
     );

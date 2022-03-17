@@ -8,8 +8,21 @@ class Product {
   String imgurl;
   String Description;
   String type;
-  int i=(0);
+  int counter = (1);
 
-  Product({this.type,this.i,this.name, this.price, this.id,this.Description,this.imgurl,this.Size});
+  Product({this.type,this.counter,this.name, this.price, this.id,this.Description,this.imgurl,this.Size});
 
+
+  toJson(){
+return{
+
+    'name': name,
+    'prise': price,
+    'Description': Description,
+    'size': Size,
+    'imagurl': imgurl,
+    'id':id,
+
+};
+}
 }

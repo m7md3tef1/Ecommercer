@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:second_project/models/product.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key key}) : super(key: key);
@@ -18,9 +19,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
   String Description = '';
   String size = '';
   String link = '';
+  String image='';
+  var id = '';
   PickedFile c;
   File e;
-
+  Product product = Product();
   var adminKey = GlobalKey<FormState>();
   var s = true;
 
@@ -31,8 +34,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(12.0),
-          child:
-          SingleChildScrollView(
+          child: SingleChildScrollView(
             child: SafeArea(
               child: InkWell(
                 onTap: () {
@@ -108,12 +110,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         Name = v;
                       });
                     },
-                        (v){
-                      if(v.toString().isEmpty){
-                        return'Please Enter Name';
+                    (v) {
+                      if (v.toString().isEmpty) {
+                        return 'Please Enter Name';
                       }
                     },
-
                   ),
                 ),
                 Padding(
@@ -125,11 +126,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         price = v;
                       });
                     },
-                        (v){
-    if(v.toString().isEmpty){
-    return'Please Enter Price';
-    }
-    },
+                    (v) {
+                      if (v.toString().isEmpty) {
+                        return 'Please Enter Price';
+                      }
+                    },
                   ),
                 ),
                 Padding(
@@ -141,9 +142,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         Description = v;
                       });
                     },
-                        (v){
-                      if(v.toString().isEmpty){
-                        return'Please Enter Description ';
+                    (v) {
+                      if (v.toString().isEmpty) {
+                        return 'Please Enter Description ';
                       }
                     },
                   ),
@@ -151,15 +152,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CustomTextForm(
-                    'Product Size',
+                    'id',
                     (v) {
                       setState(() {
-                        size = v;
+                        id = v;
                       });
                     },
-                        (v){
-                      if(v.toString().isEmpty){
-                        return'Please Enter Size ';
+                    (v) {
+                      if (v.toString().isEmpty) {
+                        return 'Please Enter id ';
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomTextForm(
+                    'Product Description',
+                    (v) {
+                      setState(() {
+                        Description = v;
+                      });
+                    },
+                    (v) {
+                      if (v.toString().isEmpty) {
+                        return 'Please Enter Description ';
                       }
                     },
                   ),
@@ -168,13 +185,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   height: MediaQuery.of(context).size.height * .06,
                 ),
                 Padding(
-                  padding:  EdgeInsets.fromLTRB(20.h ,12.h, 20.h, 12.h),
+                  padding: EdgeInsets.fromLTRB(20.h, 12.h, 20.h, 12.h),
                   child: InkWell(
                     onTap: () async {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text( Name+ ' Is Added'),backgroundColor: Colors.deepPurple[300],duration: Duration(milliseconds: 5),));
+
                       adminKey.currentState.save();
-                      adminKey.currentState.validate();
+                      await FirebaseFirestore.instance
+                          .collection('Product')
+                          .doc(product.id)
+                          .set({
+                        'id': id,
+                        'name': Name,
+                        'prise': price,
+                        'Description': Description,
+                        'size': size,
+                        'link': link,
+                      });
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(Name)));
                       await FirebaseStorage.instanceFor(
                               bucket: 'gs://ecommercer-ef073.appspot.com')
                           .ref(c.path)
@@ -187,16 +215,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       setState(() {
                         link = url;
                       });
-                      await FirebaseFirestore.instance
-                          .collection('Product')
-                          .add({
-                        'name': Name,
-                        'prise': price,
-                        'Description': Description,
-                        'size': size,
-                        'link': link,
-                      });
-
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -239,21 +257,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
     ));
   }
 
-  TextFormField CustomTextForm(
-    label,
-    onSaved,
-      validator
-  ) {
+  TextFormField CustomTextForm(label, onSaved, validator) {
     return TextFormField(
-      decoration: InputDecoration(labelText: label,
-          border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5)),
-    focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(30),
-    ),
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       ),
-      onSaved: onSaved,validator: validator,
-
+      onSaved: onSaved,
+      validator: validator,
     );
   }
+
 }

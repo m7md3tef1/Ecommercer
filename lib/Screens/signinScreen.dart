@@ -40,10 +40,9 @@ class _SigninScreenState extends State<SigninScreen> {
           ),
           child: SingleChildScrollView(
             child: SafeArea(
-              child:
-              InkWell(
-                onTap: (){
-FocusScope.of(context).unfocus();
+              child: InkWell(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
                 },
                 child: Column(children: [
                   Image(
@@ -147,19 +146,19 @@ FocusScope.of(context).unfocus();
                                 await auth.signin(email, password);
                                 Provider.of<ModalHud>(context, listen: false)
                                     .changeIsLoading(false);
-                                Navigator.popAndPushNamed(context, 'useroradmin');
+                                Navigator.popAndPushNamed(
+                                    context, 'useroradmin');
                               } catch (error) {
                                 print(error);
-                                Provider.of<ModalHud>(context, listen: false)
-                                    .changeIsLoading(false);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(error.toString())));
+                                Provider.of<ModalHud>(context, listen: false).changeIsLoading(false);
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
                               }
                             } else {
                               Provider.of<ModalHud>(context, listen: false)
                                   .changeIsLoading(false);
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text('Complete Require Data')));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Complete Require Data')));
                             }
                           },
                           child: Container(
@@ -187,8 +186,8 @@ FocusScope.of(context).unfocus();
                             },
                             child: Text(
                               'Don\'t have an account',
-                              style:
-                                  TextStyle(color: Colors.black26, fontSize: 20),
+                              style: TextStyle(
+                                  color: Colors.black26, fontSize: 20),
                             )),
                       ),
                     ]),
@@ -210,8 +209,8 @@ FocusScope.of(context).unfocus();
                             alignment: Alignment.center,
                             child: Text(
                               '  OR  ',
-                              style:
-                                  TextStyle(color: Colors.black26, fontSize: 20),
+                              style: TextStyle(
+                                  color: Colors.black26, fontSize: 20),
                             )),
                         SizedBox(
                             width: .35.sw,
@@ -229,7 +228,8 @@ FocusScope.of(context).unfocus();
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(22.h, 5.0.h, 22.0.h, 5.0.h),
+                        padding:
+                            EdgeInsets.fromLTRB(22.h, 5.0.h, 22.0.h, 5.0.h),
                         child: InkWell(
                           onTap: () async {
                             Provider.of<ModalHud>(context, listen: false)
@@ -242,7 +242,8 @@ FocusScope.of(context).unfocus();
                             } catch (e) {
                               Provider.of<ModalHud>(context, listen: false)
                                   .changeIsLoading(false);
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: Text(e.toString()),
                                 backgroundColor: Colors.red,
                               ));
@@ -274,7 +275,8 @@ FocusScope.of(context).unfocus();
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(22.h, 5.0.h, 22.0.h, 5.0.h),
+                        padding:
+                            EdgeInsets.fromLTRB(22.h, 5.0.h, 22.0.h, 5.0.h),
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.blueAccent,

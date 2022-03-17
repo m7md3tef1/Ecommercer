@@ -1,7 +1,8 @@
-import 'package:badges/badges.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:badges/badges.dart';
 import 'package:provider/provider.dart';
 import 'package:second_project/Screens/CategoryScreen.dart';
 import 'package:second_project/Screens/productDetails.dart';
@@ -57,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
       imgurl: 'image/55.jpg',
       name: 'Beef Burger',
       type: 'Cheesy Mozarella',
-      price: '6.59 L.E',
+      price: '6.59 ',
     ),
     Product(
       imgurl: 'image/56.jpg',
@@ -271,8 +272,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Consumer<FavouriteList>(
                             builder: (context, favList, child) {
-                          for (var procuct in favList.favList) {
-                            if (procuct == products[index]) {
+                          for (var product in favList.favList) {
+                            if (product == products[index]) {
                               return InkWell(
                                 onTap: () {
                                   favList.removeProduct(products[index]);

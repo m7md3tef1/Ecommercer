@@ -14,7 +14,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
    sharedPreferences.setBool('firstTime',false);
  }
-
   @override
   void initState(){
    super.initState();
@@ -23,6 +22,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return IntroductionScreen(
         skip: Text('Skip'),
+
         done: Text('Done'),
         next: Icon(Icons.arrow_forward),
         showNextButton: true,
